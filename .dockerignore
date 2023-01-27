@@ -1,0 +1,8 @@
+.git
+.cache
+*.md
+logs
+logs*
+*.log
+venv
+env
