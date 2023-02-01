@@ -1,0 +1,21 @@
+version: "3.8"
+
+services:
+  lemmatizer:
+    container_name: lemmatizer
+    build: 
+      args:
+        SERVICE_PORT: 8100
+        SERVICE_NAME: lemmatizer
+      context: ./tools/lemmatizer/
+    ports:
+      - 8100:8100
+    environment: 
+      - FLASK_APP=server
+    command: python -m gunicorn --workers=1 server:app -b 0.0.0.0:8100 --reload
+    deploy:
+      resources:
+        limits:
+          memory: 700M
+        reservations:
+          memory: 700M
