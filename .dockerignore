@@ -4,6 +4,7 @@
 logs
 logs*
 *.log
-venv
+tools/*/venv
 env
 data
+/venv
