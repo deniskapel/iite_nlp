@@ -16,6 +16,44 @@ services:
     deploy:
       resources:
         limits:
-          memory: 700M
+          memory: 400M
         reservations:
-          memory: 700M
+          memory: 400M
+
+  parser:
+    container_name: parser
+    build: 
+      args:
+        SERVICE_PORT: 8101
+        SERVICE_NAME: parser
+      context: ./tools/parser/
+    ports:
+      - 8101:8101
+    environment: 
+      - FLASK_APP=server
+    command: python -m gunicorn --workers=1 server:app -b 0.0.0.0:8101 --reload
+    deploy:
+      resources:
+        limits:
+          memory: 200M
+        reservations:
+          memory: 200M
+
+  summarizer:
+    container_name: summarizer
+    build: 
+      args:
+        SERVICE_PORT: 8102
+        SERVICE_NAME: summarizer
+      context: ./tools/summarizer/
+    ports:
+      - 8102:8102
+    environment: 
+      - FLASK_APP=server
+    command: python -m gunicorn --workers=1 server:app -b 0.0.0.0:8102 --reload
+    deploy:
+      resources:
+        limits:
+          memory: 300M
+        reservations:
+          memory: 300M
